@@ -70,10 +70,6 @@ int main (int argc, char* argv[]){
             cout<<"File boundaries "<<boundariesFile<<endl;
         }
 
-        else if(strcmp(tag, "-iter")==0){
-            addIter=true;
-            cout<<"Iteratively adding mode"<<endl;
-        }
     }
 
     mesh->setNDesiredRegions(regions);
@@ -85,9 +81,7 @@ int main (int argc, char* argv[]){
     mesh->initStructs();
 
     cout<<"Parameters: regions="<<mesh->getNDesiredRegions()<<" and weight="<<mesh->getWeightOfField()<<endl;
-    //if(addIter)
-      //  cout<<"Iterative region adding mode on"<<endl;
-    //mesh->setAddIterative(addIter);
+
 
     mesh->triggerSegmentation();
 
@@ -106,7 +100,6 @@ int main (int argc, char* argv[]){
     qs=qsl.at(0);
     qs.append("_field.dat");
     mesh->output_segAvgField(qs.toStdString().c_str());
-    //mesh->writeGraphCutResult(qsegm.toStdString().c_str());
 
     return 0;
 }
@@ -158,8 +151,8 @@ void print_help(){
       print_paragraph("write a file [output file] in .vtk formant with all the segmentations computed", cols);
 
       printf(BOLD "  EXAMPLE: \n\n" RESET);
-      printf("          .\\SimulatedImmersion -i mesh.ts -descending mesh_desc.dat -ascending mesh_asc.dat -vtk mesh.vtk\n\n");
-      print_paragraph("read as input file the mesh [mesh.ts] computes both the descending and ascending Morse complexes outputting the results in a vtk file", cols);
+      printf("          .\\SimulatedImmersion -i mesh.ts -nSeg 2000 -weight 1.0 -vtk mesh.vtk\n\n");
+      print_paragraph("read as input file the mesh [mesh.ts] and computes its oversegmentation into 2000 regions, and saves the result in a vtk file", cols);
 
 
       printf(BOLD "  IMPLEMENTATION:\n\n" RESET);
